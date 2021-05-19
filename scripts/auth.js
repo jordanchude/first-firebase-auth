@@ -1,3 +1,4 @@
+// ----SIGN UP----
 const signupForm = document.querySelector('#signup-form');
 
 // PREVENT AUTO-SUBMIT
@@ -14,18 +15,47 @@ signupForm.addEventListener('submit', (e) => {
 
     // SIGNED IN
     var user = userCredential.user;
+    
+    // CLOSE MODAL
+    const modal = document.querySelector("#modal-signup");
+    modal.style.display = "none";
+    signupForm.reset();
+
+    // MATERIALIZE
+    // MSAssertion.Modal.getInstance(modal).close();
+    
 
     })
     .catch((error) => {
         var errorCode = error.code;
         var errorMessage = error.message;
     })
-
-    // TO DO: EVENT LISTENER FOR LOGOUT?
-    // SIGN OUT
-    auth().signOut().then(() => {
-        // SIGN OUT SUCCESSFUL
-      }).catch((error) => {
-        // THROW ERROR
-      });
 });
+
+// ----SIGN IN----
+// ADD EVENT LISTENER
+// const signIn = document.querySelector('#login')
+auth.signInWithEmailAndPassword(email, password)
+  .then((userCredential) => {
+    // SIGNED IN
+    var user = userCredential.user;
+
+  })
+  .catch((error) => {
+    var errorCode = error.code;
+    var errorMessage = error.message;
+  })
+
+// ----LOGOUT----
+const logoutButton = document.querySelector('#logout');
+logoutButton.addEventListener('click', (e) => {
+  e.preventDefault();
+
+  auth.signOut().then(() => {
+    // Sign-out successful.
+    console.log('sign out successful');
+  }).catch((error) => {
+    // An error happened.
+  });
+});
+
