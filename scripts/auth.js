@@ -1,3 +1,14 @@
+// GET SIGNED IN USER
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    // User is signed in
+    console.log(user);
+  } else {
+    // no user is signed in
+    console.log("no one is signed in");
+  }
+});
+
 // ----SIGN UP----
 const signupForm = document.querySelector('#signup-form');
 
@@ -12,7 +23,7 @@ signupForm.addEventListener('submit', (e) => {
     // SIGN UP USER
     auth.createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {
-
+    console.log("signed up!")
     // SIGNED IN
     var user = userCredential.user;
     
@@ -34,10 +45,21 @@ signupForm.addEventListener('submit', (e) => {
 
 // ----SIGN IN----
 // ADD EVENT LISTENER
-// const signIn = document.querySelector('#login')
-auth.signInWithEmailAndPassword(email, password)
+const loginForm = document.querySelector('#login-form');
+
+loginForm.addEventListener('submit', (e) => {
+  // PREVENT REFRESH
+  e.preventDefault();
+
+  // GET USER INFO
+  const email = loginForm['login-email'].value;
+  const password = loginForm['login-password'].value;
+
+  // SIGN IN
+  auth.signInWithEmailAndPassword(email, password)
   .then((userCredential) => {
     // SIGNED IN
+    console.log("logged in!")
     var user = userCredential.user;
 
   })
@@ -45,6 +67,13 @@ auth.signInWithEmailAndPassword(email, password)
     var errorCode = error.code;
     var errorMessage = error.message;
   })
+
+
+  // CLOSE MODAL
+  const modal = document.querySelector("#modal-login");
+  modal.style.display = "none";
+  signupForm.reset();
+})
 
 // ----LOGOUT----
 const logoutButton = document.querySelector('#logout');
